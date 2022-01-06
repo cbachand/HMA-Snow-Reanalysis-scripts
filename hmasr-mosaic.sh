@@ -2,12 +2,10 @@
 
 ## uncomment these lines to re-export basins from GRDC database (250 Mb to download)
 
-# wget ftp://ftp.bafg.de/pub/REFERATE/GRDC/grdc_major_river_basins_shp.zip
-# unzip -d shp grdc_major_river_basins_shp.zip
-# grdc="shp/grdc_major_river_basins_shp/mrb_basins.shp"
-# ogr2ogr -where "RIVER_BASI='INDUS'" shp/INDUS.shp $grdc
-# ogr2ogr -where "RIVER_BASI='GANGES'" shp/GANGES.shp $grdc
-# ogr2ogr -where "RIVER_BASI='BRAHMAPUTRA'" shp/BRAHMAPUTRA.shp $grdc
+wget ftp://ftp.bafg.de/pub/REFERATE/GRDC/grdc_major_river_basins_shp.zip
+unzip -d shp grdc_major_river_basins_shp.zip
+grdc="shp/grdc_major_river_basins_shp/mrb_basins.shp"
+ogr2ogr -where "RIVER_BASI='INDUS'" shp/INDUS.shp $grdc
 
 # equal area projection centered in HMA region
 projEqArea="+proj=aea +lon_0=82.5 +lat_1=29.1666667 +lat_2=41.8333333 +lat_0=35.5 +datum=WGS84 +units=m +no_defs"
@@ -16,7 +14,7 @@ projEqArea="+proj=aea +lon_0=82.5 +lat_1=29.1666667 +lat_2=41.8333333 +lat_0=35.
 opt="?&gdal:co:COMPRESS=DEFLATE"
 
 # variable loop
-for v in "SUBLIM" "SNOWMELT"
+for v in "SNOWDEPTH"
 do
 
     # HMASR files were downloaded from NSIDC to this folder
@@ -31,7 +29,7 @@ do
     parallel gdalbuildvrt $pout/HMA_SR_D_v01_WY{}_${v}.vrt $pout/*WY{}*nc ::: $(seq 2000 2016)
 
     # compute statistics by basin 
-    for BV in "INDUSMOD" "INDUS" "BRAHMAPUTRA" "GANGES" 
+    for BV in "INDUS"  
     do
         # regrid to equal area projection before aggregrating (nearest neighbor method to accelerate processing)
         parallel -j1 gdalwarp -multi -wo NUM_THREADS=ALL_CPUS -co COMPRESS=DEFLATE -s_srs EPSG:4326 --config GDALWARP_IGNORE_BAD_CUTLINE YES -r near -t_srs "'"${projEqArea}"'" -crop_to_cutline -cutline shp/$BV.shp $pout/HMA_SR_D_v01_WY{}_${v}.vrt $pout/HMA_SR_D_v01_WY{}_${v}_${BV}.tif ::: $(seq 2000 2016)
