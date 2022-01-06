@@ -1,4 +1,12 @@
 #!/bin/bash
+#SBATCH --job-name=process_reanalysis
+# Account:
+#SBATCH --account=cbachand
+# Partition 
+#SBATCH --partition=savio
+#
+# Wall clock limit: 
+#SBATCH --time = 03:00:00
 
 ## uncomment these lines to re-export basins from GRDC database (250 Mb to download)
 
