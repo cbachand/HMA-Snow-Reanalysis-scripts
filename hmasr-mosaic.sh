@@ -6,7 +6,7 @@
 #SBATCH --partition=savio
 #
 # Wall clock limit: 
-#SBATCH --time = 03:00:00
+#SBATCH --time =03:00:00
 
 ## uncomment these lines to re-export basins from GRDC database (250 Mb to download)
 
