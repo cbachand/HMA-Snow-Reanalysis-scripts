@@ -14,11 +14,11 @@ projEqArea="+proj=aea +lon_0=82.5 +lat_1=29.1666667 +lat_2=41.8333333 +lat_0=35.
 opt="?&gdal:co:COMPRESS=DEFLATE"
 
 # variable loop
-for v in "SNOWDEPTH"
+for v in "SD_Post"
 do
 
     # HMASR files were downloaded from NSIDC to this folder
-    pin="/media/data/HMA/${v}"
+    pin="/global/scratch/users/cbachand/2016_reanalysis_WY2016${v}"
 
     # rearrange original netcdf files to be GDAL compatible (https://gis.stackexchange.com/a/377498)
     pout=${pin}"transposed/"
