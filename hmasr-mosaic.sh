@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=process_reanalysis
 # Account:
-#SBATCH --account=cbachand
+#SBATCH --account=fc_mgirotto
 # Partition 
 #SBATCH --partition=savio
 #
