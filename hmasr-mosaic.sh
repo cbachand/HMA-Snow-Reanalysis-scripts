@@ -6,7 +6,7 @@
 #SBATCH --partition=savio
 #
 # Wall clock limit: 
-#SBATCH --time=03:00:00
+#SBATCH --time=02:00:00
 
 ## uncomment these lines to re-export basins from GRDC database (250 Mb to download)
 
@@ -22,11 +22,11 @@ projEqArea="+proj=aea +lon_0=82.5 +lat_1=29.1666667 +lat_2=41.8333333 +lat_0=35.
 opt="?&gdal:co:COMPRESS=DEFLATE"
 
 # variable loop
-for v in "SD_Post"
+# for v in "SD_Post"
 do
 
     # HMASR files were downloaded from NSIDC to this folder
-    pin="/global/scratch/users/cbachand/2016_reanalysis_WY2016${v}"
+    pin="/global/scratch/users/cbachand/2016_reanalysis_WY2016/"
 
     # rearrange original netcdf files to be GDAL compatible (https://gis.stackexchange.com/a/377498)
     pout=${pin}"transposed/"
